@@ -196,7 +196,10 @@
     }
 
     function loadActivity() {
-      fetch("https://raw.githubusercontent.com/freddyka/devbox-activity/main/data/activity.json?v=" + Date.now(), { cache: "no-store" })
+      fetch("https://api.github.com/repos/freddyka/devbox-activity/contents/data/activity.json?ref=main&v=" + Date.now(), {
+        cache: "no-store",
+        headers: { Accept: "application/vnd.github.raw+json" },
+      })
         .then((r) => r.json())
         .then((data) => {
           document.getElementById("stamp").textContent = data.generatedAt
