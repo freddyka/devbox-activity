@@ -195,24 +195,29 @@
       return String(value).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
     }
 
-    fetch("https://raw.githubusercontent.com/freddyka/devbox-activity/main/data/activity.json?v=" + Date.now(), { cache: "no-store" })
-      .then((r) => r.json())
-      .then((data) => {
-        document.getElementById("stamp").textContent = data.generatedAt
-          ? "updated " + new Date(data.generatedAt).toLocaleString("de-DE")
-          : "waiting for first NVim save";
-        setText("currentStreak", data.streak.current);
-        setText("bestStreak", data.streak.best);
-        setText("activeDays", data.totals.activeDays);
-        setText("linesAdded", data.totals.linesAdded);
-        setText("changes", data.totals.changes);
-        renderCalendar(data);
-        renderRecent(data);
-        renderProjects(data);
-      })
-      .catch(() => {
-        document.getElementById("stamp").textContent = "activity data missing";
-      });
+    function loadActivity() {
+      fetch("https://raw.githubusercontent.com/freddyka/devbox-activity/main/data/activity.json?v=" + Date.now(), { cache: "no-store" })
+        .then((r) => r.json())
+        .then((data) => {
+          document.getElementById("stamp").textContent = data.generatedAt
+            ? "updated " + new Date(data.generatedAt).toLocaleString("de-DE")
+            : "waiting for first NVim save";
+          setText("currentStreak", data.streak.current);
+          setText("bestStreak", data.streak.best);
+          setText("activeDays", data.totals.activeDays);
+          setText("linesAdded", data.totals.linesAdded);
+          setText("changes", data.totals.changes);
+          renderCalendar(data);
+          renderRecent(data);
+          renderProjects(data);
+        })
+        .catch(() => {
+          document.getElementById("stamp").textContent = "activity data missing";
+        });
+    }
+
+    loadActivity();
+    setInterval(loadActivity, 60000);
   </script>
 </body>
 </html>
