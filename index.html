@@ -195,7 +195,7 @@
       return String(value).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
     }
 
-    fetch("data/activity.json", { cache: "no-store" })
+    fetch("https://raw.githubusercontent.com/freddyka/devbox-activity/main/data/activity.json?v=" + Date.now(), { cache: "no-store" })
       .then((r) => r.json())
       .then((data) => {
         document.getElementById("stamp").textContent = data.generatedAt
