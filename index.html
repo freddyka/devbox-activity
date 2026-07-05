@@ -196,7 +196,7 @@
     }
 
     function loadActivity() {
-      fetch("https://api.github.com/repos/freddyka/devbox-activity/contents/data/activity.json?ref=main&v=" + Date.now(), {
+      fetch("https://api.github.com/repos/freddyka/devbox-activity/contents/data/activity.json?ref=activity-data&v=" + Date.now(), {
         cache: "no-store",
         headers: { Accept: "application/vnd.github.raw+json" },
       })
